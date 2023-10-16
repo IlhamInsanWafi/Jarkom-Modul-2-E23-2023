@@ -211,5 +211,34 @@ service bind9 restart
 ```
 - Cek dengan melakukan ping www.abimanyu.e23.com pada client sadewa
   
-![soal1.1](img/3.1.png)
+![soal3.1](img/3.1.png)
 
+---
+### Soal 4
+---
+Kemudian, karena terdapat beberapa web yang harus di-deploy, buatlah subdomain parikesit.abimanyu.yyy.com yang diatur DNS-nya di Yudhistira dan mengarah ke Abimanyu.
+---
+### Jawaban
+---
+- Tambahkan subdomain parikesit di file abimanyu.e23.com
+```
+echo '$TTL 604800
+@ IN SOA abimanyu.e23.com. root.abimanyu.e23.com. (
+    2022100601 ; Serial
+    604800 ; Refresh
+    86400 ; Retry
+    2419200 ; Expire
+    604800 ) ; Negative Cache TTL
+;
+@ IN NS abimanyu.e23.com.
+@ IN A 10.48.3.2 ; IP Yudhistira
+www IN CNAME abimanyu.e23.com.
+parikesit IN A 10.48.2.4
+' > /etc/bind/prak2/abimanyu.e23.com
+```
+- Restart bind9 dengan perintah
+```
+service bind9 restart
+```
+- Cek dengan melakukan ping parikesit.abimanyu.e23.com pada client sadewa
+![soal4.1](img/4.1.png)
