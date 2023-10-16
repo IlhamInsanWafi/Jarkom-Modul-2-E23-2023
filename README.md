@@ -166,7 +166,7 @@ cp /etc/bind/db.local /etc/bind/prak2/arjuna.e23.com
 nano /etc/bind/prak2/arjuna.e23.com
 ```
 
-![soal1.1](img/2.0.png)
+![soal2.0](img/2.0.png)
 
 - Restart bind9 dengan perintah
 ```
@@ -174,4 +174,42 @@ service bind9 restart
 ```
 - Cek dengan melakukan ping www.arjuna.e23.com pada client sadewa
   
-![soal1.1](img/2.0.png)
+![soal2.1](img/2.1.png)
+
+---
+### Soal 3
+---
+Buatlah website utama pada node arjuna dengan akses ke abimanyu.yyy.com dengan alias www.abimanyu.yyy.com dengan yyy merupakan kode kelompok.
+---
+### Jawaban
+---
+- Lakukan perintah pada Yudhistira. Isikan seperti berikut:
+```
+nano /etc/bind/named.conf.local
+```
+- Isikan configurasi domain abimanyu.e23.com sesuai dengan syntax berikut:
+```
+zone "abimanyu.e23.com" {
+	type master;
+	file "/etc/bind/prak2/abimanyu.e23.com";
+};
+```
+- Copykan file db.local pada path `/etc/bind` ke dalam folder prak2 yang baru saja dibuat dan ubah namanya menjadi abimanyu.e23.com
+```
+cp /etc/bind/db.local /etc/bind/prak2/abimanyu.e23.com
+```
+- Kemudian buka file abimanyu.e23.com dan edit seperti gambar berikut dengan IP Yudhistira 
+```
+nano /etc/bind/prak2/abimanyu.e23.com
+```
+
+![soal3.0](img/3.0.png)
+
+- Restart bind9 dengan perintah
+```
+service bind9 restart
+```
+- Cek dengan melakukan ping www.abimanyu.e23.com pada client sadewa
+  
+![soal1.1](img/3.1.png)
+
