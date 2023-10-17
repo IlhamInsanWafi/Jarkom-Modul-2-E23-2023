@@ -377,8 +377,7 @@ rm /etc/nginx/sites-enabled/default
 service nginx restart
 
 ```
-
-Ulangi pada worker lainnya AbimanyuWebServer dan WisanggeniWebServer
+Ulangi pada worker lainnya `AbimanyuWebServer dan WisanggeniWebServer`
 
 
 ---
@@ -394,7 +393,7 @@ Kemudian gunakan algoritma Round Robin untuk Load Balancer pada Arjuna. Gunakan 
 ### Jawaban
 ---
 
-##ArjunaLoadBalancer
+### ArjunaLoadBalancer
 
 nano `/etc/nginx/sites-available/arjuna
 
@@ -434,7 +433,7 @@ Selain menggunakan Nginx, lakukan konfigurasi Apache Web Server pada worker Abim
 ### Jawaban
 ---
 
-## AbimanyuWebServer
+### AbimanyuWebServer
 
 Instalasi sesuai perintah soal
 
@@ -484,8 +483,7 @@ Nano `/etc/apache2/sites-available/abimanyu.e23.conf`
 MKDIR `/var/www/abimanyu.e23` 
 Tambah konfigurasi "Options +Indexes" dan berikan alias untuk `/var/www/abimanyu.e23/index.php/home` menjadi `/home`
 
-test `lynx abimanyu.e23.com/home'
-
+test `lynx abimanyu.e23.com/home`
 
 ---
 ### Soal 13
