@@ -245,7 +245,7 @@ parikesit IN A 10.48.2.4
 service bind9 restart
 ```
 - Cek dengan melakukan ping parikesit.abimanyu.e23.com pada client sadewa
-![soal4.1](img/4.1.png)
+![soal4.1](img/4.0.png)
 
 ---
 ### Soal 5
