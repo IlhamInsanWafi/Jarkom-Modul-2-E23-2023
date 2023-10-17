@@ -307,14 +307,15 @@ Arjuna merupakan suatu Load Balancer Nginx dengan tiga worker (yang juga menggun
 ### Jawaban
 ---
 
-##ArjunaLoadBalancer
+## ArjunaLoadBalancer
 Install Bind9 dan Nginx:
+
 ```
  apt-get update
  apt-get install bind9 nginx
+```
 
-
-##PrabukusumaWebServer
+## PrabukusumaWebServer
 
 ```
 echo nameserver 192.168.122.1 > /etc/resolv.conf
@@ -433,7 +434,7 @@ Selain menggunakan Nginx, lakukan konfigurasi Apache Web Server pada worker Abim
 ### Jawaban
 ---
 
-##AbimanyuWebServer
+## AbimanyuWebServer
 
 Instalasi sesuai perintah soal
 
