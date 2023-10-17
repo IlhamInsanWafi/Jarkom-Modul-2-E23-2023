@@ -256,8 +256,39 @@ Buat juga reverse domain untuk domain utama. (Abimanyu saja yang direverse)
 ---
 ### Jawaban
 ---
+- Tambahkan konfigurasi pada named.conf.local
+```
+echo 'zone "3.48.10.in-addr.arpa" {
+	type master;
+	file "/etc/bind/prak2/3.48.10.in-addr.arpa";
+};' >> /etc/bind/named.conf.local
+```
 
+- copy file db.local ke 3.48.10.in-addr.arpa
+```
+cp /etc/bind/db.local /etc/bind/prak2/3.48.10.in-addr.arpa
+```
 
+- edit file 3.48.10.in-addr.arpa
+```
+echo '$TTL 604800
+@ IN SOA abimanyu.e23.com. root.abimanyu.e23.com. (
+    2022100601 ; Serial
+    604800 ; Refresh
+    86400 ; Retry
+    2419200 ; Expire
+    604800 ) ; Negative Cache TTL
+;
+3.48.10.in-addr.arpa IN NS abimanyu.e23.com.
+2 IN PTR abimanyu.e23.com.
+' > /etc/bind/prak2/3.48.10.in-addr.arpa
+```
+- restart bind9
+```
+service bind9 restart
+```
+- Cek dns reverse sudah berfungsi dengan benar atau tidak
+![soal4.7](img/5.0.png)
 
 ---
 ### Soal 6
@@ -268,34 +299,169 @@ Agar dapat tetap dihubungi ketika DNS Server Yudhistira bermasalah, buat juga We
 ---
 ### Jawaban
 ---
+- Pada node Yudistira lakukan perubahan sebagai berikut pada named.conf.local
+```
+echo 'zone "arjuna.e23.com" {
+	type master;
+	also-notify { 10.48.2.2; };
+	allow-transfer { 10.48.2.2; };
+	file "/etc/bind/prak2/arjuna.e23.com";
+};
 
+zone "abimanyu.e23.com" {
+	type master;
+	also-notify { 10.48.2.2; };
+	allow-transfer { 10.48.2.2; };
+	file "/etc/bind/prak2/abimanyu.e23.com";
+};
 
+zone "3.48.10.in-addr.arpa" {
+	type master;
+	file "/etc/bind/prak2/3.48.10.in-addr.arpa";
+};
 
+' > /etc/bind/named.conf.local
+```
+
+#restart bind9 pada yudistira
+```
+service bind9 restart
+```
+- Pada Werkudara buat config slave seperti berikut:
+```
+echo 'zone "arjuna.e23.com" {
+	type slave;
+	masters { 10.48.3.2; };
+	file "/var/lib/bind/arjuna.e23.com";
+};
+
+zone "abimanyu.e23.com" {
+	type slave;
+	masters { 10.48.3.2; };
+	file "/var/lib/bind/abimanyu.e23.com";
+};
+
+' >> /etc/bind/named.conf.local
+```
+#restart bind9 pada werkudara
+```
+service bind9 restart
+```
+- Setelah itu stop bind9 pada yudistira, lalu lakukan ping terhadap salah satu domain pada node client untuk melakukan pengecekan apakah DNS slave sudah berfungsi atau belum
 
 ---
-### Soal 7
+### Soal 7 dan 8
 ---
 
-Seperti yang kita tahu karena banyak sekali informasi yang harus diterima, buatlah subdomain khusus untuk perang yaitu baratayuda.abimanyu.yyy.com dengan alias www.baratayuda.abimanyu.yyy.com yang didelegasikan dari Yudhistira ke Werkudara dengan IP menuju ke Abimanyu dalam folder Baratayuda.
+7. Seperti yang kita tahu karena banyak sekali informasi yang harus diterima, buatlah subdomain khusus untuk perang yaitu baratayuda.abimanyu.yyy.com dengan alias www.baratayuda.abimanyu.yyy.com yang didelegasikan dari Yudhistira ke Werkudara dengan IP menuju ke Abimanyu dalam folder Baratayuda.
+
+8. Untuk informasi yang lebih spesifik mengenai Ranjapan Baratayuda, buatlah subdomain melalui Werkudara dengan akses rjp.baratayuda.abimanyu.yyy.com dengan alias www.rjp.baratayuda.abimanyu.yyy.com yang mengarah ke Abimanyu.
 
 ---
 ### Jawaban
 ---
+- Tambahkan domain baratayuda dan rjp pada file abimanyu.e23.com di node yudistira
+```
+echo '$TTL 604800
+@ IN SOA abimanyu.e23.com. root.abimanyu.e23.com. (
+    2022100601 ; Serial
+    604800 ; Refresh
+    86400 ; Retry
+    2419200 ; Expire
+    604800 ) ; Negative Cache TTL
+;
+@ IN NS abimanyu.e23.com.
+@ IN A 10.48.3.2 ; IP Yudhistira
+www IN CNAME abimanyu.e23.com.
+parkesit IN A 10.48.2.4 ; IP Abimanyu
+ns1 IN A 10.48.2.2 ; IP Werkudara
+baratayuda IN NS ns1
+rjp IN NS ns1
+' > /etc/bind/prak2/abimanyu.e23.com
+```
 
+- lakukan perintah nano /etc/bind/named.conf.options
 
----
-### Soal 8
----
+- edit file /etc/bind/named.conf.local 
+```
+echo 'zone "arjuna.e23.com" {
+	type master;
+	also-notify { 10.48.2.2; };
+	allow-transfer { 10.48.2.2; };
+	file "/etc/bind/prak2/arjuna.e23.com";
+};
 
-Untuk informasi yang lebih spesifik mengenai Ranjapan Baratayuda, buatlah subdomain melalui Werkudara dengan akses rjp.baratayuda.abimanyu.yyy.com dengan alias www.rjp.baratayuda.abimanyu.yyy.com yang mengarah ke Abimanyu.
+zone "abimanyu.e23.com" {
+	type master;
+	file "/etc/bind/prak2/abimanyu.e23.com";
+	allow-transfer { 10.48.2.2; };
+};
 
----
-### Jawaban
----
+zone "3.48.10.in-addr.arpa" {
+	type master;
+	file "/etc/bind/prak2/3.48.10.in-addr.arpa";
+};
 
+' > /etc/bind/named.conf.local
+```
+- restart bind9 pada yudistira
+```
+service bind9 restart
+```
+- Pada Werkudara lakukan perintah nano /etc/bind/named.conf.options
+- Lalu tambahkan config baratayuda
+```
+echo 'zone "baratayuda.abimanyu.e23.com" {
+    type master;
+    file "/etc/bind/baratayuda/baratayuda.abimanyu.e23.com";  
+};' >> /etc/bind/named.conf.local
+```
 
+- Tambahkan config rjp pada named.conf.local di node werkudara
+```
+echo 'zone "rjp.baratayuda.abimanyu.e23.com" {
+    type master;
+    file "/etc/bind/baratayuda/rjp.baratayuda.abimanyu.e23.com"; 
+};' >> /etc/bind/named.conf.local
+```
 
-
+- buat folder baratayuda pada werkudara
+```
+mkdir /etc/bind/baratayuda
+```
+- atur file baratayuda.abimanyu.e23.com
+```
+echo '$TTL 604800
+@ IN SOA baratayuda.abimanyu.e23.com. root.baratayuda.abimanyu.e23.com. (
+    2022100601 ; Serial
+    604800 ; Refresh
+    86400 ; Retry
+    2419200 ; Expire
+    604800 ) ; Negative Cache TTL
+;
+@ IN NS baratayuda.abimanyu.e23.com.
+@ IN A 10.48.2.4 ; IP Abimanyu
+www IN CNAME baratayuda.abimanyu.e23.com.' > /etc/bind/baratayuda/baratayuda.abimanyu.e23.com
+```
+#
+- Atur file rjp
+```
+echo '$TTL 604800
+@ IN SOA rjp.baratayuda.abimanyu.e23.com. root.rjp.baratayuda.abimanyu.e23.com. (
+    2022100601 ; Serial
+    604800 ; Refresh
+    86400 ; Retry
+    2419200 ; Expire
+    604800 ) ; Negative Cache TTL
+;
+@ IN NS rjp.baratayuda.abimanyu.e23.com.
+@ IN A 10.48.2.4 ; IP Abimanyu
+www IN CNAME rjp.baratayuda.abimanyu.e23.com.' > /etc/bind/baratayuda/rjp.baratayuda.abimanyu.e23.com
+```
+- restart bind9 pada werkudara
+```
+service bind9 restart
+```
 
 ---
 ### Soal 9
