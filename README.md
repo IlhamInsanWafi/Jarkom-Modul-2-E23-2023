@@ -496,7 +496,7 @@ mkdir /var/www/jarkom
 nano /var/www/jarkom/index.php
 
 echo '<?php
-echo "Hello World from prabukusuma";
+echo "Aku Prabakusuma";
 ?>' > /var/www/jarkom/index.php
 
 ```
@@ -646,7 +646,7 @@ Setelah itu ubahlah agar url www.abimanyu.yyy.com/index.php/home menjadi www.abi
 Nano `/etc/apache2/sites-available/abimanyu.e23.conf`
 
 MKDIR `/var/www/abimanyu.e23` 
-Tambah konfigurasi "Options +Indexes" dan berikan alias untuk `/var/www/abimanyu.e23/index.php/home` menjadi `/home`
+Beri alias untuk `/var/www/abimanyu.e23/index.php/home` menjadi `home`
 
 test `lynx abimanyu.e23.com/home`
 
@@ -709,9 +709,10 @@ Pada subdomain tersebut folder /public hanya dapat melakukan directory listing s
 Nano `/etc/apache2/sites-available/parikesit.abimanyu.e23.conf`
 
 Beri konfigurasi "Options +Indexes" pada `/var/www/abimanyu.e23/public` 
-MKDIR `/var/www/abimanyu.e23/secret` tidak akan dapat diakses dengan memberikan "Options -Indexes"
+MKDIR `/var/www/abimanyu.e23/secret`
 
 test 'lynx parikesit.abimanyu.e23.com/public'
+
 test 'lynx parikesit.abimanyu.e23.com/secret'
 
 ---
@@ -728,6 +729,7 @@ Nano `/etc/apache2/sites-available/parikesit.abimanyu.e23.conf`
 Beri konfigurasi untuk membuat halaman error dengan kode 404 = `/error/404.html` dan kode 403 = `/error/403.html
 
 test 'lynx parikesit.abimanyu.e23.com/a'
+
 test 'lynx parikesit.abimanyu.e23.com/secret'
 
 ---
@@ -797,7 +799,7 @@ Input user 'Wayang' dan pass 'baratayudaE23' sebagai ke dalam `/etc/apache2/pass
 
 Nano `/etc/apache2/sites-available/rjp.baratayuda.abimanyu.e23.conf`
 
-Tambah konfigurasi untuk mengaktifkan autentikasi dengan tipe auth basic, nama auth "Authentication Required", AuthUserFile yang diarahkan pada `/etc/apache2/passwords`
+Tambah konfigurasi untuk mengaktifkan autentikasi `/etc/apache2/passwords`
 
 ---
 ### Soal 19
@@ -810,7 +812,7 @@ Buatlah agar setiap kali mengakses IP dari Abimanyu akan secara otomatis dialihk
 ---
 Nano `/etc/apache2/sites-available/000-default.conf`
 
-Tambah konfigurasi untuk melakukan redirect dari IP Abimanyu ke `abimanyu.e23.com` dan ubah nama server menjadi 10.48.2.4
+Tambah konfigurasi untuk melakukan redirect dari IP Abimanyu ke `abimanyu.e23.com` dan ubah menjadi 10.48.2.4
 
 ---
 ### Soal 20
