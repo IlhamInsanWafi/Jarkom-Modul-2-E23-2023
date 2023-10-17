@@ -376,7 +376,6 @@ rm /etc/nginx/sites-enabled/default
 
 service nginx restart
 
-```
 Ulangi pada worker lainnya `AbimanyuWebServer dan WisanggeniWebServer`
 
 
@@ -417,11 +416,11 @@ http {
  ln -s /etc/nginx/sites-available/jarkom /etc/nginx/sites-enabled
 ```
 
-##NakulaClient
-Lakukan pengujian pada client Nakula/lain dengan command:
-```
-lynx http://arjuna.e23.com
-```
+### NakulaClient
+
+Lakukan pengujian pada client Nakula/lain dengan command
+`lynx http://arjuna.e23.com`
+
 
 ---
 ### Soal 11
@@ -530,13 +529,14 @@ Pada tag VirtualHost, beri konfigurasi nama server, alias server, admin server d
 test `lynx parikesit.abimanyu.e23.com` 
 
 
+
 ---
 ### Soal 14
-
 ---
+
 Pada subdomain tersebut folder /public hanya dapat melakukan directory listing sedangkan pada folder /secret tidak dapat diakses (403 Forbidden).
----
 
+---
 ### Jawaban
 ---
 
