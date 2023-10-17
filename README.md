@@ -288,6 +288,7 @@ Untuk informasi yang lebih spesifik mengenai Ranjapan Baratayuda, buatlah subdom
 ---
 ### Soal 9
 ---
+
 Arjuna merupakan suatu Load Balancer Nginx dengan tiga worker (yang juga menggunakan nginx sebagai webserver) yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Lakukan deployment pada masing-masing worker.
 ---
 ### Jawaban
@@ -362,20 +363,23 @@ service nginx restart
 
 
 ```
-Ulangi pada worker lainnya #AbimanyuWebServer dan #WisanggeniWebServer
+Ulangi pada worker lainnya AbimanyuWebServer dan WisanggeniWebServer
 
 
 ---
 ### Soal 10
 ---
+
 Kemudian gunakan algoritma Round Robin untuk Load Balancer pada Arjuna. Gunakan server_name pada soal nomor 1. Untuk melakukan pengecekan akses alamat web tersebut kemudian pastikan worker yang digunakan untuk menangani permintaan akan berganti ganti secara acak. Untuk webserver di masing-masing worker wajib berjalan di port 8001-8003. Contoh
     - Prabakusuma:8001
     - Abimanyu:8002
     - Wisanggeni:8003
+
 ---
 ### Jawaban
 ---
-#Arjuna
+
+##ArjunaLoadBalancer
 nano `/etc/nginx/sites-available/arjuna
 ```
 http {
@@ -397,8 +401,8 @@ http {
  ln -s /etc/nginx/sites-available/lb-jarkom /etc/nginx/sites-enabled
 ```
 
-#NakulaClient
-Lakukan pengujian pada client Nakula dengan command:
+##NakulaClient
+Lakukan pengujian pada client Nakula/lain dengan command:
 ```
 lynx http://arjuna.e23.com
 ```
@@ -406,12 +410,17 @@ lynx http://arjuna.e23.com
 ---
 ### Soal 11
 ---
+
 Selain menggunakan Nginx, lakukan konfigurasi Apache Web Server pada worker Abimanyu dengan web server www.abimanyu.yyy.com. Pertama dibutuhkan web server dengan DocumentRoot pada /var/www/abimanyu.yyy
+
 ---
 ### Jawaban
 ---
-#AbimanyuWebServer
+
+##AbimanyuWebServer
+
 Instalasi sesuai perintah soal
+
 ```
 apt-get install apache2
 apt-get install wget
