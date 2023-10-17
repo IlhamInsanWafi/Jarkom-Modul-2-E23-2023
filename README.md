@@ -179,7 +179,9 @@ service bind9 restart
 ---
 ### Soal 3
 ---
+
 Buatlah website utama pada node arjuna dengan akses ke abimanyu.yyy.com dengan alias www.abimanyu.yyy.com dengan yyy merupakan kode kelompok.
+
 ---
 ### Jawaban
 ---
@@ -216,7 +218,9 @@ service bind9 restart
 ---
 ### Soal 4
 ---
+
 Kemudian, karena terdapat beberapa web yang harus di-deploy, buatlah subdomain parikesit.abimanyu.yyy.com yang diatur DNS-nya di Yudhistira dan mengarah ke Abimanyu.
+
 ---
 ### Jawaban
 ---
@@ -246,7 +250,9 @@ service bind9 restart
 ---
 ### Soal 5
 ---
+
 Buat juga reverse domain untuk domain utama. (Abimanyu saja yang direverse)
+
 ---
 ### Jawaban
 ---
@@ -256,7 +262,9 @@ Buat juga reverse domain untuk domain utama. (Abimanyu saja yang direverse)
 ---
 ### Soal 6
 ---
+
 Agar dapat tetap dihubungi ketika DNS Server Yudhistira bermasalah, buat juga Werkudara sebagai DNS Slave untuk domain utama.
+
 ---
 ### Jawaban
 ---
@@ -267,7 +275,9 @@ Agar dapat tetap dihubungi ketika DNS Server Yudhistira bermasalah, buat juga We
 ---
 ### Soal 7
 ---
+
 Seperti yang kita tahu karena banyak sekali informasi yang harus diterima, buatlah subdomain khusus untuk perang yaitu baratayuda.abimanyu.yyy.com dengan alias www.baratayuda.abimanyu.yyy.com yang didelegasikan dari Yudhistira ke Werkudara dengan IP menuju ke Abimanyu dalam folder Baratayuda.
+
 ---
 ### Jawaban
 ---
@@ -276,7 +286,9 @@ Seperti yang kita tahu karena banyak sekali informasi yang harus diterima, buatl
 ---
 ### Soal 8
 ---
+
 Untuk informasi yang lebih spesifik mengenai Ranjapan Baratayuda, buatlah subdomain melalui Werkudara dengan akses rjp.baratayuda.abimanyu.yyy.com dengan alias www.rjp.baratayuda.abimanyu.yyy.com yang mengarah ke Abimanyu.
+
 ---
 ### Jawaban
 ---
@@ -290,17 +302,19 @@ Untuk informasi yang lebih spesifik mengenai Ranjapan Baratayuda, buatlah subdom
 ---
 
 Arjuna merupakan suatu Load Balancer Nginx dengan tiga worker (yang juga menggunakan nginx sebagai webserver) yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Lakukan deployment pada masing-masing worker.
+
 ---
 ### Jawaban
 ---
 
-#ArjunaLoadBalancer
+##ArjunaLoadBalancer
 Install Bind9 dan Nginx:
 ```
  apt-get update
  apt-get install bind9 nginx
 
-#PrabukusumaWebServer
+
+##PrabukusumaWebServer
 
 ```
 echo nameserver 192.168.122.1 > /etc/resolv.conf
@@ -318,7 +332,7 @@ echo '<?php
 echo "Hello World from prabukusuma";
 ?>' > /var/www/jarkom/index.php
 
-
+```
 echo '
  server {
 
@@ -361,8 +375,8 @@ rm /etc/nginx/sites-enabled/default
 
 service nginx restart
 
-
 ```
+
 Ulangi pada worker lainnya AbimanyuWebServer dan WisanggeniWebServer
 
 
@@ -380,7 +394,9 @@ Kemudian gunakan algoritma Round Robin untuk Load Balancer pada Arjuna. Gunakan 
 ---
 
 ##ArjunaLoadBalancer
+
 nano `/etc/nginx/sites-available/arjuna
+
 ```
 http {
     upstream workers {
@@ -398,7 +414,7 @@ http {
     }
 }
 
- ln -s /etc/nginx/sites-available/lb-jarkom /etc/nginx/sites-enabled
+ ln -s /etc/nginx/sites-available/jarkom /etc/nginx/sites-enabled
 ```
 
 ##NakulaClient
@@ -456,7 +472,9 @@ test `lynx abimanyu.e23.com`
 ---
 ### Soal 12
 ---
+
 Setelah itu ubahlah agar url www.abimanyu.yyy.com/index.php/home menjadi www.abimanyu.yyy.com/home.
+
 ---
 ### Jawaban
 ---
@@ -471,7 +489,9 @@ test `lynx abimanyu.e23.com/home'
 ---
 ### Soal 13
 ---
+
 Selain itu, pada subdomain www.parikesit.abimanyu.yyy.com, DocumentRoot disimpan pada /var/www/parikesit.abimanyu.yyy
+
 ---
 ### Jawaban
 ---
@@ -513,9 +533,11 @@ test `lynx parikesit.abimanyu.e23.com`
 
 ---
 ### Soal 14
+
 ---
 Pada subdomain tersebut folder /public hanya dapat melakukan directory listing sedangkan pada folder /secret tidak dapat diakses (403 Forbidden).
 ---
+
 ### Jawaban
 ---
 
@@ -530,7 +552,9 @@ test 'lynx parikesit.abimanyu.e23.com/secret'
 ---
 ### Soal 15
 ---
+
 Buatlah kustomisasi halaman error pada folder /error untuk mengganti error kode pada Apache. Error kode yang perlu diganti adalah 404 Not Found dan 403 Forbidden.
+
 ---
 ### Jawaban
 ---
@@ -558,7 +582,9 @@ test 'lynx parikesit.abimanyu.e23.com/js'
 ---
 ### Soal 17
 ---
+
 Agar aman, buatlah konfigurasi agar www.rjp.baratayuda.abimanyu.yyy.com hanya dapat diakses melalui port 14000 dan 14400.
+
 ---
 ### Jawaban
 ---
@@ -595,7 +621,10 @@ Isi  dengan konfigurasi untuk port 14000 dan 14400 dengan masing-masing memiliki
 ---
 ### Soal 18
 ---
-Untuk mengaksesnya buatlah autentikasi username berupa “Wayang” dan password “baratayudayyy” dengan yyy merupakan kode kelompok. Letakkan DocumentRoot pada /var/www/rjp.baratayuda.abimanyu.yyy.
+
+Untuk mengaksesnya buatlah autentikasi username berupa “Wayang” dan password “baratayudayyy” dengan yyy merupakan kode kelompok. Letakkan DocumentRoot pada 
+/var/www/rjp.baratayuda.abimanyu.yyy.
+
 ---
 ### Jawaban
 ---
@@ -608,7 +637,9 @@ Tambah konfigurasi untuk mengaktifkan autentikasi dengan tipe auth basic, nama a
 ---
 ### Soal 19
 ---
+
 Buatlah agar setiap kali mengakses IP dari Abimanyu akan secara otomatis dialihkan ke www.abimanyu.yyy.com (alias)
+
 ---
 ### Jawaban
 ---
@@ -619,7 +650,9 @@ Tambah konfigurasi untuk melakukan redirect dari IP Abimanyu ke `abimanyu.e23.co
 ---
 ### Soal 20
 ---
+
 Karena website www.parikesit.abimanyu.yyy.com semakin banyak pengunjung dan banyak gambar gambar random, maka ubahlah request gambar yang memiliki substring “abimanyu” akan diarahkan menuju abimanyu.png.
+
 ---
 ### Jawaban
 ---
